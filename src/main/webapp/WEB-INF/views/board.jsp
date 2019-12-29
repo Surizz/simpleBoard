@@ -10,6 +10,16 @@
 <title>방명록</title>
 </head>
 <body>
+<h1>방명록 남기기</h1>
+<form action='add.do' method='post'>
+이메일<br><input type='text' name='email'><br>
+암호<br><input type='password' name='password'><br>
+<label for="content">내용:</label><br>
+  <textarea id="content" 
+  name='content' rows="5" cols="40"></textarea><br><br>
+<input type='submit' value='추가'>
+</form>
+
 <h1>방명록</h1>
 <table border="1">
 <tr> 

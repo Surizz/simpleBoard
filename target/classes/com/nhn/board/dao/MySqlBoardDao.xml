@@ -7,6 +7,7 @@
 	<resultMap type="BoardEntity" id="boardEntityMap">
 		<id column="BNO" property="bno"/>
 		<result column="EMAIL" property="email"/>
+		<result column="PWD" property="password"/>
 		<result column="CONTENT" property="content"/>
 		<result column="CRE_DATE" property="createdDate"/>
 		<result column="MOD_DATE" property="modifiedDate"/>
@@ -16,5 +17,9 @@
 		SELECT BNO, EMAIL, CONTENT, CRE_DATE, MOD_DATE
 		FROM BOARD ORDER BY MOD_DATE DESC
 	</select>
-		
+	
+	<insert id="insert" parameterType="BoardEntity">
+		INSERT INTO BOARD(EMAIL, PWD, CONTENT, CRE_DATE, MOD_DATE)
+		VALUES (#{email},#{password},#{content},now(),now())
+	</insert>	
 </mapper>

@@ -2,6 +2,9 @@ package com.nhn.board;
 
 import java.util.Locale;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,7 +23,7 @@ public class MainController {
 	BoardDao boardDao;
 	
 	@RequestMapping(value = "/", method=RequestMethod.GET)
-	public String boardList(Locale locale, Model model) throws Exception {
+	public String boardList(Model model) throws Exception {
 		
 		List<BoardEntity> boardList = boardDao.selectList();		
 		model.addAttribute("boardList", boardList);
@@ -28,4 +31,18 @@ public class MainController {
 		return "board";
 	}
 
+	@RequestMapping(value = "/add", method=RequestMethod.POST)
+	public String addBoardEntity(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		BoardEntity boardEntity = new BoardEntity();
+
+		boardEntity.setEmail(request.getParameter("email"))
+			.setPassword(request.getParameter("password"))
+			.setContent(request.getParameter("content"));
+		
+		boardDao.insert(boardEntity);
+		
+		response.sendRedirect("/board");
+		
+		return null;
+	}
 }

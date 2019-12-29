@@ -27,5 +27,17 @@ public class MySqlBoardDao implements BoardDao{
 			sqlSession.close();
 		}
 	}
+	
+	@Override
+	public int insert(BoardEntity entity) throws Exception {
+		SqlSession sqlSession = sqlSessionFactory.openSession();
 		
+		try {
+			int count = sqlSession.insert("com.nhn.board.dao.BoardDao.insert", entity);
+			sqlSession.commit();
+			return count;
+		} finally {
+			sqlSession.close();
+		}
+	}
 }
