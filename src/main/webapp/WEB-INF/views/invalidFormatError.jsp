@@ -13,7 +13,7 @@
 		<h1>
 			<c:choose>
 				<c:when test="${errorType == 'email'}">
-					잘못된 형식의 이메일입니다.
+					메일 형식이 올바르지 않습니다.
 			    </c:when>
 			    <c:when test="${errorType == 'wrongPassword'}">
 					비밀번호가 맞지 않습니다.
