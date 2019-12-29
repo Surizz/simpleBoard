@@ -24,7 +24,7 @@
 	</insert>	
 	
 	<select id="selectOne" parameterType="int" resultMap="boardEntityMap">
-		SELECT BNO, EMAIL, CONTENT, CRE_DATE, MOD_DATE
+		SELECT BNO, EMAIL, PWD, CONTENT, CRE_DATE, MOD_DATE
 		FROM BOARD WHERE BNO=#{value}
 	</select>
 	

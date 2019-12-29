@@ -156,7 +156,14 @@
 			<version>0.9.9-RC2</version>
 		</dependency>
 				
-				
+			
+		<!-- JavaMail -->		
+        <dependency>
+        	<groupId>com.sun.mail</groupId>
+         	<artifactId>javax.mail</artifactId>
+        	<version>1.6.2</version>
+        </dependency>
+        		
 		<!-- @Inject -->
 		<dependency>
 			<groupId>javax.inject</groupId>

@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.nhn.board.dao.BoardDao;
+import com.nhn.board.validation.EmailValidation;
 import com.nhn.board.vo.BoardEntity;
 
 import java.util.List;
@@ -40,7 +41,19 @@ public class MainController {
 	@RequestMapping(value = "/add", method=RequestMethod.POST)
 	public String addBoardEntity(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		BoardEntity boardEntity = new BoardEntity();
-
+		
+		// email validation
+		if(!EmailValidation.isValidEmailAddress(request.getParameter("email"))) {
+			request.setAttribute("errorType", "email");
+			return "invalidFormatError";
+		}	
+		
+		// not entered password
+		if(request.getParameter("password").equals("")) {
+			request.setAttribute("errorType", "password");
+			return "invalidFormatError";
+		}
+		
 		boardEntity.setEmail(request.getParameter("email"))
 			.setPassword(request.getParameter("password"))
 			.setContent(request.getParameter("content"));
@@ -54,13 +67,18 @@ public class MainController {
 
 	@RequestMapping(value = "/update", method=RequestMethod.POST)
 	public String updateBoardEntity(HttpServletRequest request, HttpServletResponse response) throws Exception {
-
-		boardDao.update(new BoardEntity().
-				setBno(Integer.parseInt(request.getParameter("bno"))).
-				setContent(request.getParameter("content"))	
-				);
-		response.sendRedirect("/board/");
+		
+		BoardEntity boardEntity = boardDao.selectOne(
+				Integer.parseInt(request.getParameter("bno")));
+		
+		if(!boardEntity.getPassword().equals(request.getParameter("password"))) {
+			request.setAttribute("errorType", "wrongPassword");
+			return "invalidFormatError";
+		}
 				
+		boardDao.update(boardEntity.setContent(request.getParameter("content")));
+		
+		response.sendRedirect("/board/");				
 		return null;
 	}
 }
