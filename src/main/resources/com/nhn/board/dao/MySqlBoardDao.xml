@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.nhn.board.dao.BoardDao">
+
+	<resultMap type="BoardEntity" id="boardEntityMap">
+		<id column="BNO" property="bno"/>
+		<result column="EMAIL" property="email"/>
+		<result column="CONTENT" property="content"/>
+		<result column="CRE_DATE" property="createdDate"/>
+		<result column="MOD_DATE" property="modifiedDate"/>
+	</resultMap>
+
+	<select id="selectList" resultMap="boardEntityMap">
+		SELECT BNO, EMAIL, CONTENT, CRE_DATE, MOD_DATE
+		FROM BOARD ORDER BY MOD_DATE DESC
+	</select>
+		
+</mapper>
