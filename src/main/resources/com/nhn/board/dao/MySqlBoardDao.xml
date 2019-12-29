@@ -22,4 +22,14 @@
 		INSERT INTO BOARD(EMAIL, PWD, CONTENT, CRE_DATE, MOD_DATE)
 		VALUES (#{email},#{password},#{content},now(),now())
 	</insert>	
+	
+	<select id="selectOne" parameterType="int" resultMap="boardEntityMap">
+		SELECT BNO, EMAIL, CONTENT, CRE_DATE, MOD_DATE
+		FROM BOARD WHERE BNO=#{value}
+	</select>
+	
+	<update id="update" parameterType="BoardEntity">
+		UPDATE BOARD SET CONTENT=#{content}, MOD_DATE=now()
+		WHERE BNO=#{bno}
+	</update>
 </mapper>

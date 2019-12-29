@@ -1,7 +1,5 @@
 package com.nhn.board;
 
-import java.util.Locale;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -23,11 +21,19 @@ public class MainController {
 	BoardDao boardDao;
 	
 	@RequestMapping(value = "/", method=RequestMethod.GET)
-	public String boardList(Model model) throws Exception {
-		
+	public String boardList(Model model, HttpServletRequest request, HttpServletResponse response) throws Exception {		
 		List<BoardEntity> boardList = boardDao.selectList();		
 		model.addAttribute("boardList", boardList);
-
+		
+		if(request.getParameter("bno") != null) // 방명록 수정
+		{
+			BoardEntity boardEntity = boardDao.selectOne(
+					Integer.parseInt(request.getParameter("bno")));	
+			model.addAttribute("boardEntity", boardEntity);
+			model.addAttribute("boardCond", "update");
+			return "board";
+		}					
+		model.addAttribute("boardCond", "add");
 		return "board";
 	}
 
@@ -43,6 +49,18 @@ public class MainController {
 		
 		response.sendRedirect("/board");
 		
+		return null;
+	}
+
+	@RequestMapping(value = "/update", method=RequestMethod.POST)
+	public String updateBoardEntity(HttpServletRequest request, HttpServletResponse response) throws Exception {
+
+		boardDao.update(new BoardEntity().
+				setBno(Integer.parseInt(request.getParameter("bno"))).
+				setContent(request.getParameter("content"))	
+				);
+		response.sendRedirect("/board/");
+				
 		return null;
 	}
 }

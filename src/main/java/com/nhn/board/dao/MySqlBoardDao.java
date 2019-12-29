@@ -40,4 +40,26 @@ public class MySqlBoardDao implements BoardDao{
 			sqlSession.close();
 		}
 	}
+	
+	@Override
+	public BoardEntity selectOne(int bno) throws Exception {
+		SqlSession sqlSession = sqlSessionFactory.openSession();	
+		try {
+			return sqlSession.selectOne("com.nhn.board.dao.BoardDao.selectOne", bno);
+		} finally {
+			sqlSession.close();
+		}
+	}
+	
+	@Override
+	public int update(BoardEntity entity) throws Exception {
+		SqlSession sqlSession = sqlSessionFactory.openSession();	
+		try {
+			int count = sqlSession.update("com.nhn.board.dao.BoardDao.update", entity);
+			sqlSession.commit();
+			return count;
+		} finally {
+			sqlSession.close();
+		}
+	}
 }
