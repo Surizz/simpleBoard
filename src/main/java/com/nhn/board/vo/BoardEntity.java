@@ -1,17 +1,17 @@
 package com.nhn.board.vo;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Locale;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class BoardEntity {
 	private int bno;
 	private String email;
 	private String password;
 	private String content;
-	private Date createdDate;
-	private Date modifiedDate;
-	
+	private LocalDateTime createdDate;
+	private LocalDateTime modifiedDate;
+	private DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy년 MM월 dd일 HH:mm:ss");
+
 	public int getBno() {
 		return bno;
 	}
@@ -41,16 +41,16 @@ public class BoardEntity {
 		return this;
 	}
 	public String getCreatedDate() {
-		return new SimpleDateFormat("yyyy년 MM월 dd일 HH:mm:ss").format(createdDate);
+		return createdDate.format(dateTimeFormatter);
 	}
-	public BoardEntity setCreatedDate(Date createdDate) {
+	public BoardEntity setCreatedDate(LocalDateTime createdDate) {
 		this.createdDate = createdDate;
 		return this;
 	}
 	public String getModifiedDate() {
-		return new SimpleDateFormat("yyyy년 MM월 dd일 HH:mm:ss").format(modifiedDate);
+		return modifiedDate.format(dateTimeFormatter);
 	}
-	public BoardEntity setModifiedDate(Date modifiedDate) {
+	public BoardEntity setModifiedDate(LocalDateTime modifiedDate) {
 		this.modifiedDate = modifiedDate;
 		return this;
 	}	

@@ -26,10 +26,10 @@
 
 <h1>방명록 남기기</h1>
 <form name='form' onsubmit="return checkValidate();" action='add.do' method='post'>
-	이메일<br><input type='text' id="email" name='email'><br>
-	암호<br><input type='password' name='password'><br>
+	이메일<br><input type='text' id="email" name='email' placeholder="name@email.com" style="width:250px;"><br>
+	암호<br><input type='password' name='password' style="width:250px;"><br>
 	<label for="content">내용</label><br>
-	<textarea id="content" name='content' rows="5" cols="40"></textarea><br><br>
+	<textarea id="content" name='content' rows="5" style="width:250px;" placeholder="만나서 반갑습니다."></textarea><br><br>
 	<input type='submit' value='추가'>
 	<input type='button' value='취소' onclick='location.href="/board"'>
 </form>
