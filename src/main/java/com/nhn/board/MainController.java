@@ -26,7 +26,7 @@ public class MainController {
 		List<BoardEntity> boardList = boardDao.selectList();		
 		model.addAttribute("boardList", boardList);
 		
-		if(request.getParameter("bno") != null) // 방명록 수정
+		if(request.getParameter("bno") != null) // if update view
 		{
 			BoardEntity boardEntity = boardDao.selectOne(
 					Integer.parseInt(request.getParameter("bno")));	
@@ -71,11 +71,12 @@ public class MainController {
 		BoardEntity boardEntity = boardDao.selectOne(
 				Integer.parseInt(request.getParameter("bno")));
 		
+		// password not matched
 		if(!boardEntity.getPassword().equals(request.getParameter("password"))) {
 			request.setAttribute("errorType", "wrongPassword");
 			return "invalidFormatError";
 		}
-				
+			
 		boardDao.update(boardEntity.setContent(request.getParameter("content")));
 		
 		response.sendRedirect("/board/");				

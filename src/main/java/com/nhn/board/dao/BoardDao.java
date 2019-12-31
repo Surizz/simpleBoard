@@ -9,4 +9,5 @@ public interface BoardDao {
 	int insert(BoardEntity entity) throws Exception;
 	BoardEntity selectOne(int bno) throws Exception;
 	int update(BoardEntity entity) throws Exception;
+	void delete(int bno) throws Exception;
 }

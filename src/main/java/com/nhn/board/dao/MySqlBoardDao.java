@@ -19,7 +19,7 @@ public class MySqlBoardDao implements BoardDao{
 	}
 	
 	@Override
-	public List<BoardEntity> selectList() {
+	public List<BoardEntity> selectList() throws Exception{
 		SqlSession sqlSession = sqlSessionFactory.openSession();		
 		try {
 			return sqlSession.selectList("com.nhn.board.dao.BoardDao.selectList");
@@ -30,12 +30,11 @@ public class MySqlBoardDao implements BoardDao{
 	
 	@Override
 	public int insert(BoardEntity entity) throws Exception {
-		SqlSession sqlSession = sqlSessionFactory.openSession();
-		
+		SqlSession sqlSession = sqlSessionFactory.openSession();		
 		try {
-			int count = sqlSession.insert("com.nhn.board.dao.BoardDao.insert", entity);
+			sqlSession.insert("com.nhn.board.dao.BoardDao.insert", entity);
 			sqlSession.commit();
-			return count;
+			return entity.getBno();
 		} finally {
 			sqlSession.close();
 		}
@@ -58,6 +57,17 @@ public class MySqlBoardDao implements BoardDao{
 			int count = sqlSession.update("com.nhn.board.dao.BoardDao.update", entity);
 			sqlSession.commit();
 			return count;
+		} finally {
+			sqlSession.close();
+		}
+	}
+	
+	@Override
+	public void delete(int bno) throws Exception {
+		SqlSession sqlSession = sqlSessionFactory.openSession();		
+		try {
+			sqlSession.delete("com.nhn.board.dao.BoardDao.delete", bno);
+			sqlSession.commit();
 		} finally {
 			sqlSession.close();
 		}

@@ -14,13 +14,17 @@
 	</resultMap>
 
 	<select id="selectList" resultMap="boardEntityMap">
-		SELECT BNO, EMAIL, CONTENT, CRE_DATE, MOD_DATE
+		SELECT BNO, EMAIL, PWD, CONTENT, CRE_DATE, MOD_DATE
 		FROM BOARD ORDER BY MOD_DATE DESC
 	</select>
 	
 	<insert id="insert" parameterType="BoardEntity">
 		INSERT INTO BOARD(EMAIL, PWD, CONTENT, CRE_DATE, MOD_DATE)
 		VALUES (#{email},#{password},#{content},now(),now())
+		<!-- to get board index -->
+		<selectKey resultType="int" keyProperty="bno" order="AFTER">
+                SELECT MAX(BNO) FROM BOARD
+        </selectKey>
 	</insert>	
 	
 	<select id="selectOne" parameterType="int" resultMap="boardEntityMap">
@@ -32,4 +36,8 @@
 		UPDATE BOARD SET CONTENT=#{content}, MOD_DATE=now()
 		WHERE BNO=#{bno}
 	</update>
+	
+	<delete id="delete" parameterType="int">
+		DELETE FROM BOARD WHERE BNO=#{value}
+	</delete>
 </mapper>
